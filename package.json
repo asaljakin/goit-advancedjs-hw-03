@@ -16,10 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "@vimeo/player": "^2.20.1",
+    "axios": "^1.6.2",
     "flatpickr": "^4.6.13",
     "izitoast": "^1.4.0",
     "lodash.throttle": "^4.1.1",
     "simplelightbox": "^2.14.2",
+    "slim-select": "^2.6.0",
     "vite-plugin-full-reload": "^1.0.5",
     "vite-plugin-html-inject": "^1.0.1"
   }
