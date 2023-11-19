@@ -2,7 +2,7 @@ import SlimSelect from 'slim-select';
 import 'slim-select/styles';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
+import { fetchBreeds, fetchCatByBreed } from './js/cat-api';
 
 const elements = {
     selector: document.querySelector('.breed-select'),
