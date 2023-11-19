@@ -3,7 +3,6 @@ import 'slim-select/styles';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
-import './styles.css';
 
 const elements = {
     selector: document.querySelector('.breed-select'),
