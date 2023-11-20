@@ -36,7 +36,6 @@ fetchBreeds()
 
 function onSelectBreed(event) {
     setVisible(elements.selector, false);
-    elements.selector.hidden = true;
     setVisible(elements.divCatInfo, false);
     setVisible(elements.loader);
     const breedId = event.currentTarget.value;
@@ -51,7 +50,7 @@ function onSelectBreed(event) {
         <p><b>Temperament:</b> ${breeds[0].temperament}</p></div>`;
 
         setVisible(elements.loader, false);
-        // setVisible(slimSelect.selectEl);
+        setVisible(elements.selector);
         setVisible(elements.divCatInfo);
     })
     .catch(onFetchError);
