@@ -11,9 +11,14 @@ const elements = {
     error: document.querySelector('.error'),
 };
 
-elements.loader.classList.replace('loader', 'is-hidden');
-elements.error.classList.add('is-hidden');
-elements.divCatInfo.classList.add('is-hidden');
+setVisible(elements.loader);
+
+const slimSelect = new SlimSelect({
+  select: elements.selector,
+  settings: {
+    placeholderText: 'Select breeds',
+  },
+});
 
 let arrBreedsId = [];
 
@@ -22,39 +27,41 @@ fetchBreeds()
     data.forEach(element => {
         arrBreedsId.push({text: element.name, value: element.id});
     });
-    new SlimSelect({
-        select: elements.selector,
-        data: arrBreedsId
-    });
+    slimSelect.setData([{ placeholder: true, text: '' }, ...arrBreedsId]);
+    elements.selector.addEventListener('change', onSelectBreed);
+    setVisible(elements.selector);
+    setVisible(elements.loader, false);
     })
 .catch(onFetchError);
 
-elements.selector.addEventListener('change', onSelectBreed);
-
 function onSelectBreed(event) {
-    elements.loader.classList.replace('is-hidden', 'loader');
-    elements.divCatInfo.classList.add('is-hidden');
-
+    setVisible(elements.selector, false);
+    elements.selector.hidden = true;
+    setVisible(elements.divCatInfo, false);
+    setVisible(elements.loader);
     const breedId = event.currentTarget.value;
     fetchCatByBreed(breedId)
-    .then(data => {
-        elements.loader.classList.replace('loader', 'is-hidden');
+        .then(data => {
         const { url, breeds } = data[0];
-        
-        elements.divCatInfo.innerHTML = `<div class="box-img">
+            elements.divCatInfo.innerHTML = `<div class="box-img">
         <img src="${url}" alt="${breeds[0].name}" width="400"/>
         </div>
         <div class="box"><h2>${breeds[0].name}</h2>
         <p>${breeds[0].description}</p>
-        <p><b>Temperament:</b> ${breeds[0].temperament}</p></div>`
+        <p><b>Temperament:</b> ${breeds[0].temperament}</p></div>`;
 
-        elements.divCatInfo.classList.remove('is-hidden');
+        setVisible(elements.loader, false);
+        // setVisible(slimSelect.selectEl);
+        setVisible(elements.divCatInfo);
     })
     .catch(onFetchError);
 };
 
 function onFetchError(error) {
-    elements.loader.classList.replace('loader', 'is-hidden');
+    // elements.loader.classList.replace('loader', 'is-hidden');
+    // elements.selector.classList.remove('is-hidden');
+    setVisible(elements.selector);
+    setVisible(elements.loader, false);
     iziToast.error({
                 title: 'Error',
                 position: 'center',
@@ -62,3 +69,7 @@ function onFetchError(error) {
             });
 
 };
+
+function setVisible(el, isVisible = true) {
+    el.classList.toggle('is-hidden', !isVisible);
+}

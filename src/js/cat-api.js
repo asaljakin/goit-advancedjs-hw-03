@@ -3,14 +3,18 @@ import axios from 'axios';
 axios.defaults.headers.common['x-api-key'] =
   'live_YcPK50Q9Tlo6HTwuQdWD2bCxz3yagmtk1ZnwD5kwWM9YVWOHL7d5LNuEvzs7sfZj';
 
-export async function fetchBreeds() {
-  return await axios
-    .get('https://api.thecatapi.com/v1/breeds')
-    .then(response => response.data);
+axios.defaults.baseURL = 'https://api.thecatapi.com/v1';
+
+export function fetchBreeds() {
+  return axios.get('/breeds')
+    .then(response => {
+      return response.data;
+    });
 }
 
-export async function fetchCatByBreed(breedId) {
-  return await axios
-    .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
-    .then(response => response.data);
+export function fetchCatByBreed(breedId) {
+  return axios.get(`/images/search?breed_ids=${breedId}`)
+    .then(response => {
+      return response.data;
+    });
 }
